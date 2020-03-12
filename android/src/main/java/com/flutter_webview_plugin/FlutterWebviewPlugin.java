@@ -168,7 +168,7 @@ public class FlutterWebviewPlugin implements MethodCallHandler, PluginRegistry.A
         FrameLayout.LayoutParams params;
         if (rc != null) {
             params = new FrameLayout.LayoutParams(
-                    dp2px(activity, rc.get("width").intValue()), dp2px(activity, rc.get("height").intValue()));
+                    dp2px(activity, rc.get("width").intValue() + 1), dp2px(activity, rc.get("height").intValue() + 1));
             params.setMargins(dp2px(activity, rc.get("left").intValue()), dp2px(activity, rc.get("top").intValue()),
                     0, 0);
         } else {
