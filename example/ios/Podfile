@@ -1,9 +1,9 @@
 # Uncomment this line to define a global platform for your project
-# platform :ios, '9.0'
-
-if ENV['FLUTTER_FRAMEWORK_DIR'] == nil
-  abort('Please set FLUTTER_FRAMEWORK_DIR to the directory containing Flutter.framework')
-end
+platform :ios, '9.0'
+source 'https://github.com/CocoaPods/Specs.git'
+#if ENV['FLUTTER_FRAMEWORK_DIR'] == nil
+ # abort('Please set FLUTTER_FRAMEWORK_DIR to the directory containing Flutter.framework')
+#end
 
 target 'Runner' do
   use_frameworks!
