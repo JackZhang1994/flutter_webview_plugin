@@ -123,8 +123,8 @@ static NSString *const CHANNEL_NAME = @"flutter_webview_plugin";
     
     if (userAgent != (id)[NSNull null]) {
         UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectZero];
-        NSString *userAgent = [webView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
-        NSString *newUserAgent = [userAgent stringByAppendingString:userAgent];//自定义需要拼接的字符串
+        NSString *oldUserAgent = [webView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
+        NSString *newUserAgent = [oldUserAgent stringByAppendingString:userAgent];//自定义需要拼接的字符串
         NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:newUserAgent, @"UserAgent", nil];
         [[NSUserDefaults standardUserDefaults] registerDefaults:dictionary];
         //        [[NSUserDefaults standardUserDefaults] registerDefaults:@{@"UserAgent": userAgent}];
