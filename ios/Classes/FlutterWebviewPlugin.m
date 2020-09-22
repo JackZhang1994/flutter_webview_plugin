@@ -122,12 +122,19 @@ static NSString *const CHANNEL_NAME = @"flutter_webview_plugin";
     }
     
     if (userAgent != (id)[NSNull null]) {
-        UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectZero];
-        NSString *oldUserAgent = [webView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
-        NSString *newUserAgent = [oldUserAgent stringByAppendingString:userAgent];//自定义需要拼接的字符串
-        NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:newUserAgent, @"UserAgent", nil];
-        [[NSUserDefaults standardUserDefaults] registerDefaults:dictionary];
-        //        [[NSUserDefaults standardUserDefaults] registerDefaults:@{@"UserAgent": userAgent}];
+        [self.webview evaluateJavaScript:@"navigator.userAgent" completionHandler:^(id result, NSError *error) {
+            NSString *oldUserAgent = result;
+            NSString *newUserAgent = [oldUserAgent stringByAppendingString:userAgent];
+            NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:newUserAgent, @"UserAgent", nil];
+            [[NSUserDefaults standardUserDefaults] registerDefaults:dictionary];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            //9.0以后支持，在WKWebView的alloc之前设置有效，解决只更改了本地的UserAgent，网页端不修改问题
+            if (@available(iOS 9.0, *)) {
+                [self.webview setCustomUserAgent:newUserAgent];
+            } else {
+                // Fallback on earlier versions
+            }
+        }];
     }
     
     CGRect rc;
